@@ -104,3 +104,16 @@ biases = mlp_classifier.intercepts_
 # Print the weights and biases for each layer
 for i, (weight, bias) in enumerate(zip(weights, biases)):
     print(f"Layer {i + 1} - Weights:\n{weight}\nBiases:\n{bias}\n")
+
+# Create new matrix
+new_matrix = np.array([[100, 150], [100, 200]])  
+
+# Resize matrix
+new_matrix_flatten = new_matrix.reshape(1, -1)
+
+# Prevision class new matrix
+predicted_class = mlp_classifier.predict(new_matrix_flatten)[0]
+
+# Decode matrix in (A, B, C ou D)
+classes = ['A', 'B', 'C', 'D']
+print("Predicted class for the new matrix:", predicted_class)

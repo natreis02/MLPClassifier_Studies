@@ -105,15 +105,34 @@ biases = mlp_classifier.intercepts_
 for i, (weight, bias) in enumerate(zip(weights, biases)):
     print(f"Layer {i + 1} - Weights:\n{weight}\nBiases:\n{bias}\n")
 
-# Create new matrix
-new_matrix = np.array([[100, 150], [100, 200]])  
 
-# Resize matrix
+### Prediction of a new matrix ###
+# Create a new matrix
+new_matrix = np.array([[120, 80], [220, 150]])  
+
+# Resize the matrix
 new_matrix_flatten = new_matrix.reshape(1, -1)
 
-# Prevision class new matrix
+# Prediction of the new matrix class
 predicted_class = mlp_classifier.predict(new_matrix_flatten)[0]
 
-# Decode matrix in (A, B, C ou D)
-classes = ['A', 'B', 'C', 'D']
-print("Predicted class for the new matrix:", predicted_class)
+# Decode the matrix in (A, B, C ou D)
+# classes = ['A', 'B', 'C', 'D']
+print("Predicted class for the new matrix:", predicted_class, "\n")
+
+# Define the sigmoid function
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+Z1 = np.dot(new_matrix_flatten,weights[0]) + biases[0] # Calculate Z1
+A1 = np.maximum(0,Z1) # Apply ReLU activation function to Z1 to get A1
+Z2 = np.dot(A1,weights[1]) + biases[1] # Calculate Z2
+A2 = sigmoid(Z2) # Apply sigmoid activation function to Z2 to get A2
+
+# Print the values
+print("Z1:", Z1)
+print("A1:", A1)
+print("Z2:", Z2)
+print("A2:", A2)
+print("\n")
+print("Predicted class for the new matrix:", predicted_class, "with {:.2f}%".format(np.max(A2) * 100))
